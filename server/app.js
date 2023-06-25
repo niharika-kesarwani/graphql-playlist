@@ -4,6 +4,8 @@ const schema = require("./schema/schema");
 const mongoose = require("mongoose");
 
 const app = express();
+
+//connect to mlab database
 mongoose.connect(
   "mongodb+srv://test:123@gql-playlist.ceervex.mongodb.net/?retryWrites=true&w=majority"
 );
