@@ -2,7 +2,11 @@ import { useQuery, useMutation } from "@apollo/client";
 import { graphql } from "@apollo/client/react/hoc";
 import { flowRight as compose } from "lodash";
 import { useState } from "react";
-import { getAuthorsQuery, addBookMutation } from "../queries/queries";
+import {
+  getBooksQuery,
+  getAuthorsQuery,
+  addBookMutation,
+} from "../queries/queries";
 
 function AddBook() {
   const getAuthors = useQuery(getAuthorsQuery);
@@ -23,7 +27,10 @@ function AddBook() {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    addBook({ variables: formDetails });
+    addBook({
+      variables: formDetails,
+      refetchQueries: [{ query: getBooksQuery }],
+    });
   };
 
   return (
