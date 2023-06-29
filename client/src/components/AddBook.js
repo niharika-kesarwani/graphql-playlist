@@ -23,7 +23,7 @@ function AddBook() {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    addBook();
+    addBook({ variables: formDetails });
   };
 
   return (
