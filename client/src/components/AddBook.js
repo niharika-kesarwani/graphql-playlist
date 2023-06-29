@@ -1,14 +1,6 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { graphql } from "@apollo/client/react/hoc";
-
-const getAuthorsQuery = gql`
-  {
-    authors {
-      name
-      id
-    }
-  }
-`;
+import { getAuthorsQuery } from "../queries/queries";
 
 function AddBook() {
   const { data, loading, error } = useQuery(getAuthorsQuery);
