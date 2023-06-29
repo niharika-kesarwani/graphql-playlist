@@ -1,27 +1,29 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { graphql } from "@apollo/client/react/hoc";
-import { getAuthorsQuery } from "../queries/queries";
+import { flowRight as compose } from "lodash";
 import { useState } from "react";
+import { getAuthorsQuery, addBookMutation } from "../queries/queries";
 
 function AddBook() {
-  const { data, loading, error } = useQuery(getAuthorsQuery);
+  const getAuthors = useQuery(getAuthorsQuery);
+  const [addBook, { data, loading, error }] = useMutation(addBookMutation);
   const [formDetails, setFormDetails] = useState({
     name: "",
     genre: "",
     authorId: "",
   });
 
-  if (loading) {
+  if (getAuthors?.loading) {
     return <option disabled>Loading Authors...</option>;
   }
 
-  if (error) {
+  if (getAuthors?.error) {
     return <option disabled>Something went wrong!</option>;
   }
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(formDetails);
+    addBook();
   };
 
   return (
@@ -54,7 +56,7 @@ function AddBook() {
           }
         >
           <option>Select author</option>
-          {data.authors.map((author) => (
+          {getAuthors?.data.authors.map((author) => (
             <option key={author.id} value={author.id}>
               {author.name}
             </option>
@@ -67,4 +69,7 @@ function AddBook() {
   );
 }
 
-export default graphql(getAuthorsQuery)(AddBook);
+export default compose(
+  graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
+  graphql(addBookMutation, { name: "addBookMutation" })
+)(AddBook);
