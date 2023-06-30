@@ -4,9 +4,11 @@ import { getBooksQuery } from "../queries/queries";
 
 //components
 import BookDetails from "./BookDetails";
+import { useState } from "react";
 
 function BookList() {
   const { data, loading, error } = useQuery(getBooksQuery);
+  const [selected, setSelected] = useState(null);
 
   if (loading) {
     return <div>Loading books...</div>;
@@ -19,10 +21,14 @@ function BookList() {
     <div>
       <ul id="book-list">
         {data.books.map((book) => {
-          return <li key={book.id}>{book.name}</li>;
+          return (
+            <li key={book.id} onClick={(e) => setSelected(book.id)}>
+              {book.name}
+            </li>
+          );
         })}
       </ul>
-      <BookDetails />
+      <BookDetails bookId={selected} />
     </div>
   );
 }
