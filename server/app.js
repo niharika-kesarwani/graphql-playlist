@@ -6,6 +6,8 @@ const cors = require("cors");
 
 const app = express();
 
+const PORT = process.env.port || 4000;
+
 // allow cross-origin requests
 app.use(cors());
 
@@ -25,4 +27,4 @@ app.use(
   })
 );
 
-app.listen(4000, () => console.log("now listening to requests on port 4000"));
+app.listen(PORT, () => console.log("now listening to requests on port 4000"));
