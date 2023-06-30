@@ -2,6 +2,9 @@ import { useQuery } from "@apollo/client";
 import { graphql } from "@apollo/client/react/hoc";
 import { getBooksQuery } from "../queries/queries";
 
+//components
+import BookDetails from "./BookDetails";
+
 function BookList() {
   const { data, loading, error } = useQuery(getBooksQuery);
 
@@ -19,6 +22,7 @@ function BookList() {
           return <li key={book.id}>{book.name}</li>;
         })}
       </ul>
+      <BookDetails />
     </div>
   );
 }
